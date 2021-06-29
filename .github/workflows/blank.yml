@@ -33,6 +33,7 @@ jobs:
           head_name: ${{ github.event.pull_request.head.repo.full_name }}
         run: |
           echo $head_name
+          echo $GITHUB_REPOSITORY
 
           echo "0"
           if [[ $head_name == $GITHUB_REPOSITORY ]]; then

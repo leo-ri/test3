@@ -5,7 +5,7 @@ name: CI
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-  push:
+  
   pull_request:
 
   # Allows you to run this workflow manually from the Actions tab
@@ -35,11 +35,7 @@ jobs:
           echo $head_name
           echo $GITHUB_REPOSITORY
 
-          echo "0"
-          if [[ $head_name == $GITHUB_REPOSITORY ]]; then
-            git diff --name-only "$(git rev-parse --abbrev-ref HEAD)" remotes/origin/main
-          else
             git remote add m https://github.com/leo-ri/test3.git
             git fetch m
             git diff --name-only "$(git rev-parse --abbrev-ref HEAD)" m/main
-          fi
+

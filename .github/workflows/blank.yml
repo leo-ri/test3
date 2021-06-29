@@ -43,8 +43,3 @@ jobs:
             git fetch m
             git diff --name-only "$(git rev-parse --abbrev-ref HEAD)" m/main
           fi
-
-          echo "1"
-          git diff --name-only "$(git rev-parse --abbrev-ref HEAD)"...m/main
-          echo sdf
-          git diff --name-only "$(git rev-parse --abbrev-ref HEAD)"..m/main

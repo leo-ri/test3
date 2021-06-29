@@ -29,11 +29,19 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
+        env: 
+          head_name: ${{ github.event.pull_request.head.repo.full_name }}
         run: |
-          git remote add m https://github.com/leo-ri/test3.git
-          git fetch m
+          echo head_name
+
           echo "0"
-          git diff --name-only "$(git rev-parse --abbrev-ref HEAD)" m/main
+          if [[ head_name == $GITHUB_REPOSITORY ]]; then
+            git diff --name-only "$(git rev-parse --abbrev-ref HEAD)" remotes/origin/main
+          else
+            git remote add m https://github.com/leo-ri/test3.git
+            git fetch m
+            git diff --name-only "$(git rev-parse --abbrev-ref HEAD)" m/main
+          fi
 
           echo "1"
           git diff --name-only "$(git rev-parse --abbrev-ref HEAD)"...m/main

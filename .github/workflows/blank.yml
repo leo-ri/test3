@@ -32,4 +32,10 @@ jobs:
         run: |
           git remote add m https://github.com/leo-ri/test3.git
           git fetch m
+          echo "0"
           git diff --name-only "$(git rev-parse --abbrev-ref HEAD)" m/main
+
+          echo "1"
+          git diff --name-only "$(git rev-parse --abbrev-ref HEAD)"...m/main
+          echo sdf
+          git diff --name-only "$(git rev-parse --abbrev-ref HEAD)"..m/main

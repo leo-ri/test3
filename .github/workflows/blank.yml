@@ -32,10 +32,10 @@ jobs:
         env: 
           head_name: ${{ github.event.pull_request.head.repo.full_name }}
         run: |
-          echo head_name
+          echo $head_name
 
           echo "0"
-          if [[ head_name == $GITHUB_REPOSITORY ]]; then
+          if [[ $head_name == $GITHUB_REPOSITORY ]]; then
             git diff --name-only "$(git rev-parse --abbrev-ref HEAD)" remotes/origin/main
           else
             git remote add m https://github.com/leo-ri/test3.git

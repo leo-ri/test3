@@ -13,7 +13,12 @@ jobs:
   allowed:
     name: Allowed
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.labels.*.name, 'dependencies') || contains(github.event.pull_request.labels.*.name, 'safe-to-test')
+    if: |
+      contains(github.event.pull_request.labels.*.name, 'dependencies') || 
+      contains(github.event.pull_request.labels.*.name, 'safe-to-test') || 
+      github.event_name == 'workflow_dispatch' || 
+      github.ref == 'refs/heads/master' || 
+      (github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]')
     steps:
       - name: allowed message
         run: echo "Allowed to run"

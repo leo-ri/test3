@@ -4,17 +4,18 @@ name: CI
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
+  pull_request_target:
+    types: [labeled]
   pull_request:
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+
   # This workflow contains a single job called "build"
   build:
+#     if: (github.event_name == 'pull_request_target') && ( contains(github.event.pull_request.labels.*.name, 'dependencies') || contains(github.event.pull_request.labels.*.name,
+#       'safe-to-test'))
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -22,7 +23,12 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
+      
+      - name: printit
+        run: |
+          echo test
+          echo ${{ github.event_name }}
+          
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!

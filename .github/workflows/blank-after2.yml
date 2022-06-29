@@ -4,6 +4,11 @@ name: Reuse2
 
 on:
   workflow_call:
+    inputs:
+      forked:
+        type: bool
+        required: false
+        default: false
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -15,7 +20,20 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - if: ${{ inputs.forked == false }}
+        uses: actions/checkout@v2
+
+      - if: ${{ inputs.forked == true }}
+        uses: actions/checkout@v3.0.0
+        with:
+          ref: ${{github.event.pull_request.head.ref}}
+          repository: ${{github.event.pull_request.head.repo.full_name}}
+
+      - if: ${{ inputs.forked == false }}
+        run: echo Forked is false
+
+      - if: ${{ inputs.forked == true }}
+        run: echo forked is true
 
       # Runs a single command using the runners shell
       - name: Run a one-line script

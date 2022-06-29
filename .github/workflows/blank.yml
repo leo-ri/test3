@@ -2,19 +2,21 @@
 
 name: CI
 
-# Controls when the workflow will run
 on:
   pull_request_target:
     types: [labeled]
   push:
     branches: [ main ]
 
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   call-workflow-1-after:
     uses: ./.github/workflows/blank-after1.yml
+    with:
+      forked: true
     secrets: inherit
   call-workflow-2-after:
     uses: ./.github/workflows/blank-after2.yml
+    with:
+      forked: true
     secrets: inherit

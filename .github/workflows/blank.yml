@@ -6,62 +6,13 @@ name: CI
 on:
   pull_request_target:
     types: [labeled]
-    
+
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-
-  allowed:
-    name: Allowed
-    runs-on: ubuntu-latest
-    if: |
-      contains(github.event.pull_request.labels.*.name, 'dependencies') || 
-      contains(github.event.pull_request.labels.*.name, 'safe-to-test') || 
-      github.event_name == 'workflow_dispatch' || 
-      github.ref == 'refs/heads/master' || 
-      (github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]')
-    steps:
-      - name: allowed message
-        run: echo "Allowed to run"
-
-  # This workflow contains a single job called "build"
-  build:
-    needs: allowed
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-#         with:
-#           ref: ${{github.event.pull_request.head.ref}}
-#           repository: ${{github.event.pull_request.head.repo.full_name}}
-      
-      - name: printit
-        run: |
-          echo test
-          echo ${{ github.event_name }}
-          
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: |
-          echo Hello, world!
-          cat README.md
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        env: 
-          head_name: ${{ github.event.pull_request.head.repo.full_name }}
-        run: |
-          echo $head_name
-          echo $GITHUB_REPOSITORY
-
-          echo "0"
-          if [[ $head_name == $GITHUB_REPOSITORY ]]; then
-            git diff --name-only "$(git rev-parse --abbrev-ref HEAD)" remotes/origin/main
-          else
-            git remote add m https://github.com/leo-ri/test3.git
-            git fetch m
-            git diff --name-only "$(git rev-parse --abbrev-ref HEAD)" m/main
-          fi
+  call-workflow-1-after:
+    uses: ./.github/workflows/blank-after1.yml
+    secrets: inherit
+  call-workflow-2-after:
+    uses: ./.github/workflows/blank-after2.yml
+    secrets: inherit

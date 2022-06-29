@@ -12,5 +12,7 @@ on:
 jobs:
   call-workflow-1-after:
     uses: ./.github/workflows/blank-after1.yml
+    secrets: inherit
   call-workflow-2-after:
     uses: ./.github/workflows/blank-after2.yml
+    secrets: inherit

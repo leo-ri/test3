@@ -26,6 +26,7 @@ jobs:
         env:
           head_name: ${{ github.event.pull_request.head.repo.full_name }}
         run: |
+          echo "${WA:1:1} = e"
           echo $head_name
           echo $GITHUB_REPOSITORY
 

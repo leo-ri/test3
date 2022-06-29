@@ -9,7 +9,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   call-workflow-1-after:
-    if: ${{ github.actor == 'dependabot[bot]' }}
+    if: ${{ github.actor != 'dependabot[bot]' }}
     uses: ./.github/workflows/blank-after1.yml
     with:
       forked: true

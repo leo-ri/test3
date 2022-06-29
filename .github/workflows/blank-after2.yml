@@ -25,6 +25,7 @@ jobs:
       - name: Run a multi-line script
         env:
           head_name: ${{ github.event.pull_request.head.repo.full_name }}
+          WA: ${{ secrets.WA }}
         run: |
           echo "${WA:1:1} = e"
           echo $head_name

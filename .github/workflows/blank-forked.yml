@@ -13,10 +13,10 @@ jobs:
   call-workflow-1-after:
     uses: ./.github/workflows/blank-after1.yml
     with:
-      forked: false
+      forked: true
     secrets: inherit
   call-workflow-2-after:
     uses: ./.github/workflows/blank-after2.yml
     with:
-      forked: false
+      forked: true
     secrets: inherit
